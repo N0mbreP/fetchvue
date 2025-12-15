@@ -1,30 +1,29 @@
+<!-- src/App.vue -->
 <script setup>
-import { ref } from "vue";
-import { useFetch } from "@/composables/useFetch";
-const cerca = ref('Breakfast');
-const url = ref(`https://www.themealdb.com/api/json/v1/1/search.php?s=${cerca.value}`);
-const { data, error, loading, fetchData } = useFetch(url);
-console.log(data.value);
+import { RouterView } from 'vue-router'
+import NavigationBar from './components/NavigationBar.vue'
 </script>
 
 <template>
-  <div v-if="loading">Loading...</div>
-  <div v-else-if="error">Error: {{ error }}</div>
-  <div v-else>
-    <div v-if="data && data.meals">
-      <div v-for="meal in data.meals" :key="meal.idMeal">
-        <h2>{{ meal.strMeal }}</h2>
-        <img :src="meal.strMealThumb" :alt="meal.strMeal" width="200" />
-        <p>{{ meal.strCategory }} - {{ meal.strArea }}</p>
-      </div>
-    </div>
-    <!--<div v-if="data && data.meals">
-      <div v-for="meal in data.meals" :key="meal.idMeal">
-        <h2>{{ meal.strMeal }}</h2>
-        <img :src="meal.strMealThumb" :alt="meal.strMeal" width="200" />
-        <p>{{ meal.strCategory }} - {{ meal.strArea }}</p>
-        <p>{{ meal.strInstructions }}</p>
-      </div>
-    </div>-->
-  </div>
+  <header>
+    <NavigationBar />
+  </header>
+
+  <main class="container">
+    <RouterView />
+  </main>
 </template>
+
+<style>
+/* Estils globals bàsics */
+body {
+  font-family: Avenir, Helvetica, Arial, sans-serif;
+  margin: 0;
+  color: #2c3e50;
+}
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+</style>
